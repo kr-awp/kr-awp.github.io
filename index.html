@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="sxl71jM-me9gqYmW7VOI0caWiREfhq_t3rfoLJEAwLk" />
+    <title>한국형 올웨더 포트폴리오 홈페이지</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 글꼴 및 배경색 설정 */
+        body {font-family: 'Noto Sans KR', sans-serif; background-color: #f9fafb; color: #27272a;}
+        /* Tailwind 로드 실패 대비 */
+        .hidden { display: none !important; }
+        /* 차트 컨테이너의 반응형 설정 */
+        .chart-container { position: relative; width: 100%; height: auto; }
+        /* 4개 경제 계절 카드 스타일링 */
+        .season-card {transition: transform 0.3s ease, box-shadow 0.3s ease;}
+        .season-card:hover {transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
+
+        /* 네비게이션 링크 스타일링 */
+        .nav-link { transition: color 0.3s, background-color 0.3s; }
+        .nav-link.active {color: #fff; background-color: #0d9488; }
+        .nav-link:not(.active):hover {color: #0d9488; }
+
+        /* 아코디언 메뉴 스타일링 */
+        .accordion-content {  max-height: 0;  overflow: hidden; transition: max-height 0.5s ease-in-out;}
+
+        /* sticky header가 위를 덮지 않도록 앵커/스크롤 오프셋 보정 */
+        html { scroll-padding-top: 80px; }                                /* 모바일 추정 헤더 높이 */
+        @media (min-width: 768px) { html { scroll-padding-top: 96px; }}   /* 데스크톱에서 좀 더 높게 */
+    </style>
+</head>
+
+<body class="bg-stone-50 text-stone-800 min-h-screen flex flex-col">
+
+    <!-- 헤더 및 네비게이션 바 -->
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="text-xl font-bold text-teal-700 mb-4 md:mb-0">
+                한국형 올웨더 포트폴리오
+            </div>
+            <div class="flex flex-wrap justify-center md:space-x-4 space-x-2">
+                <a href="#intro-section"       id="intro-btn"       class="nav-link font-medium px-3 py-2 rounded-md active text-sm md:text-base">소개</a>
+                <a href="#philosophy-section"  id="philosophy-btn"  class="nav-link font-medium px-3 py-2 rounded-md text-sm md:text-base">핵심 철학</a>
+                <a href="#compare-section"     id="compare-btn"     class="nav-link font-medium px-3 py-2 rounded-md text-sm md:text-base">분석 및 비교</a>
+                <a href="#performance-section" id="performance-btn" class="nav-link font-medium px-3 py-2 rounded-md text-sm md:text-base">과거 성과</a>
+                <a href="#strategy-section"    id="strategy-btn"    class="nav-link font-medium px-3 py-2 rounded-md text-sm md:text-base">실행 전략</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main class="flex-grow container mx-auto px-4 sm:px-6 py-8">
+        <!-- 1. 소개 섹션 -->
+        <div id="intro-section" class="content-section">
+            <div class="text-center">
+                <h1 class="text-3xl md:text-4xl font-bold mb-4 text-teal-800"> 한국인을 위한 올웨더</h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto text-stone-600 mb-8" style="word-break: keep-all;">
+                    레이 달리오가 제시한 ‘올웨더 포트폴리오(All Weather Portfolio)’는 어떠한 경제 환경에서도 꾸준한 수익을 창출하도록 설계된 전략입니다.<br>
+                    하지만 이 전략은 미국에서 투자(USD)를 기준으로 설계되어, 원화(KRW)로 투자하는 한국인에게는 환율이라는 추가 변수가 존재합니다.<br>
+                    따라서 일반 올웨더 포트폴리오와 다른 한국 투자자를 위해 환율 변동까지 전략적으로 반영한 한국형 올웨더 포트폴리오를 제안합니다.
+                </p>
+            </div>
+            <div>
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 mt-16 text-teal-800 text-center" >올웨더 포트폴리오의 기본 원리</h2>
+                <p class="text-lg max-w-3xl mx-auto text-stone-600 mb-6" style="word-break: keep-all;">
+                    올웨더 포트폴리오는 경제를 예측하기 매우 어렵다는 겸손한 인식에서 출발합니다.<br>
+                    서로 다른 경제 환경에서 각자 우수한 성과를 내는 자산들을 적절히 조합하여, 어떠한 상황에서도 안정적인 수익을 추구하도록 설계되었습니다.<br>
+                    이는 미래 예측이 아닌 모든 가능성에 대비한 분산투자의 중요성을 강조합니다.
+                </p>
+                <p class="text-lg max-w-3xl mx-auto text-stone-600 mb-6" style="word-break: keep-all;">
+                    또한, 이 전략은 <b>'리스크 배분(Risk Allocation)'</b> 원칙에 기반합니다.
+                    단순히 자산 비중을 정하는 것을 넘어 각 자산이 전체 포트폴리오의 리스크에 얼마나 기여하는지를 판단 합니다.<br>
+                    각 자산이 특정 경제 환경에서 어떻게 반응하는지 근본적인 인과관계에 기반하여 분산투자 합니다.
+                </p>
+            </div>
+        </div>
+
+        <!-- 2. 핵심 철학 섹션 -->
+        <div id="philosophy-section" class="content-section">
+            <div class="text-left">
+                <h2 class="text-2xl md:text-3xl font-bold mb-8 text-teal-800 text-center"> 올웨더의 핵심: 4개의 경제 계절</h2>
+                <p class="text-lg max-w-2xl mx-auto text-stone-600 mb-12" style="word-break: keep-all;">
+                    레이 달리오의 올웨더 포트폴리오는 경제 예측이 아닌, 어떤 상황에서도 대비하는 '리스크 분산'에 기반합니다. <br>
+                    아래 그림은 4개의 각각 다른 경제 상황에서 좋은 성과를 내는 자산들을 보여줍니다.<br>
+                    예를 들어, 성장률이 예상보다 높으면 주식이 좋고, 예상보다 나쁘면 국채 가격이 상승합니다.
+                    올웨더 포트폴리오는 각 자산의 이러한 특성을 반영하여 분산 투자 합니다.
+                </p>
+                
+                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 50px;">
+                <img src="aw_bw1.png" alt="All Weather 그림1" style="width:500px; max-width:100%; height:auto;" onerror="this.style.display='none'">
+                </div>
+
+                <p class="text-lg max-w-2xl mx-auto text-stone-600 mb-12" style="word-break: keep-all;">
+                    하지만 우리는 다른 관점에서 각각을 독립적으로 보지 않고 상호 조합으로 생각합니다. <br>
+                    아래 카드는 각각의 조합을 이용하여 4계절로 표시한 것입니다.
+                </p>
+
+                <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+                    <img id="mainImage" src="aw_bw2.png" alt="All Weather 그림2" style="width:500px; max-width:100%; height:auto;" onerror="this.style.display='none'">
+                </div>
+                <!-- 버튼/카드 영역 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    <div class="season-card bg-white p-6 rounded-lg shadow-md text-left"  onclick="changeImage('aw_1.png')">
+                        <h3 class="text-xl font-bold mb-2 text-sky-700">📈 경제 성장기</h3>
+                        <p class="text-stone-600 text-sm">물가 상승률이 낮고, 경제가 빠르게 성장하는 시기입니다.</p>
+                        <ul class="mt-4 text-sm space-y-2">
+                            <li class="font-semibold text-sky-800" style="word-break: keep-all;">✔ 주식: 기업의 미래 현금흐름 증가에 대한 기대로 높은 수익을 창출합니다.</li>
+                        </ul>
+                    </div>
+                    <div class="season-card bg-white p-6 rounded-lg shadow-md text-left" onclick="changeImage('aw_2.png')">
+                        <h3 class="text-xl font-bold mb-2 text-red-700">🔥 인플레이션 확산기</h3>
+                        <p class="text-stone-600 text-sm">물가 상승률이 높고, 경제가 여전히 성장하는 시기입니다.</p>
+                        <ul class="mt-4 text-sm space-y-2">
+                            <li class="font-semibold text-red-800" style="word-break: keep-all;">✔ 원자재: 실물 가치 상승 및 화폐 가치 하락에 대한 헤지 수단이 됩니다.</li>
+                        </ul>
+                    </div>
+                    <div class="season-card bg-white p-6 rounded-lg shadow-md text-left" onclick="changeImage('aw_3.png')">
+                        <h3 class="text-xl font-bold mb-2 text-amber-700">📉 경제 둔화기</h3>
+                        <p class="text-stone-600 text-sm">물가 상승률이 높고, 경제가 둔화되는 시기입니다.</p>
+                        <ul class="mt-4 text-sm space-y-2">
+                            <li class="font-semibold text-amber-800" style="word-break: keep-all;">✔ 금: 경기 둔화와 화폐가치 하락 우려로 안전한 실물자산 수요가 증가합니다.</li>
+                        </ul>
+                    </div>
+                    <div class="season-card bg-white p-6 rounded-lg shadow-md text-left" onclick="changeImage('aw_4.png')">
+                        <h3 class="text-xl font-bold mb-2 text-indigo-700">❄️ 디플레이션 확산기</h3>
+                        <p class="text-stone-600 text-sm">물가 상승률이 낮고, 경제가 둔화되는 시기입니다.</p>
+                        <ul class="mt-4 text-sm space-y-2">
+                            <li class="font-semibold text-indigo-800" style="word-break: keep-all;">✔ 장기채권: 경기 하강에 대응하여 중앙은행이 금리를 인하하면 채권 가격이 상승하여 손실을 방어합니다.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 자바스크립트 -->
+                <script>
+                  function changeImage(imageName) {document.getElementById("mainImage").src = imageName;}
+                </script>
+            </div>
+        </div>
+
+        <!-- 3. 분석 및 비교 섹션 -->
+        <div id="compare-section" class="content-section">
+            <div class="text-left mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-teal-800 text-center"> 한국 투자자에게 적합한 올웨더 포트폴리오</h2>
+                <p class="text-lg max-w-3xl mx-auto text-stone-600" style="word-break: keep-all;">
+                    한국인 투자자가 해외에 투자할 때 반드시 고려해야 할 요소는 원달러 환율 변동입니다.<br>
+                    환율 변동을 단순히 헤지할 수도 있지만, 원달러 환율과 주식 가격 사이에 보이는 역(-)상관관계는 <br>
+                    달러 자산이 주식투자 위험을 줄여주는 '또 다른 안전자산'의 기능을 나타내고 있습니다.
+                </p>
+            </div>
+            
+            <!-- 환율-코스피 상관관계 차트 -->
+            <div class="chart-container" style="max-width: 800px; height: 400px; max-height: 500px; margin-bottom: 3rem; margin-left: auto; margin-right: auto;">
+                <canvas id="correlationChart"></canvas>
+            </div>
+            
+            <p class="text-lg max-w-3xl mx-auto text-stone-600 mb-8" style="word-break: keep-all;">
+                한국인 미국 투자는 환율변동 리스크에 노출됩니다.<br>
+                원래 올웨더 포트폴리오 대로 미국 자산에만 투자하면 원달러 환율을 헤지해야 하며 이는 추가 비용을 유발합니다. <br>
+                따라서 미국 투자자에게 적합한 자산배분 따르는 것 보다, 한국의 특수성을 반영하여 자산을 재구성하는 전략이 필요합니다.
+            </p>
+
+            <h3 class="text-2xl md:text-3xl font-bold mb-4 text-teal-800 mt-16 text-center text-center"> 한국인 맞춤형 올웨더 포트폴리오</h3>
+            <p class="text-lg max-w-3xl mx-auto text-stone-600 mb-8 ">
+                일반 올웨더의 채권 비중을 국내 채권과 해외 채권으로 분산하고 환율 리스크를 적절히 가져가는 모델을 제안합니다.
+            </p>
+            
+            <!-- 포트폴리오 비교 차트 및 설명 -->
+            <div class="flex flex-col lg:flex-row items-center justify-center gap-8 md:gap-12 mb-16">
+                <div class="w-full lg:w-2/3">
+                    <div class="flex justify-center items-center mb-6 space-x-4">
+                        <span id="label-standard" class="font-semibold text-stone-500">일반 올웨더</span>
+                        <label for="portfolio-toggle" class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" value="" id="portfolio-toggle" class="sr-only peer">
+                            <div class="w-14 h-7 bg-stone-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-teal-300 peer-checked:bg-teal-600"></div>
+                            <span class="absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform peer-checked:translate-x-full"></span>
+                        </label>
+                        <span id="label-korean" class="font-bold text-teal-700">한국형 올웨더</span>
+                    </div>
+                    <div class="chart-container max-w-xl mx-auto">
+                        <canvas id="portfolioChart"></canvas>
+                    </div>
+                </div>
+                <div id="portfolio-description" class="w-full lg:w-2/3 mt-8 lg:mt-0 p-6 bg-white rounded-lg shadow-md">
+                </div>
+            </div>
+
+            <!-- 자산별 논리적 근거 -->
+            <div class="text-lg max-w-3xl mx-auto text-stone-600 mb-8 mt-16">
+                <h4 class="text-xl font-bold mb-4">제안 포트폴리오 구성 근거</h4>
+                <ul class="list-disc list-inside space-y-4">
+                    <li>주식 (30%): 경제 성장을 반영하는 자산으로 장기 수익률의 주요 원천 </li>
+                    <li>채권 (55%): 위험 헤지 자산으로 일정한 이자 수익과 유동성을 제공</li>
+                    <li>실물 자산 (15%): 인플레이션과 지정학적 리스크를 헤지 </li>
+                    <li>달러 자산 (65%): 경기 침체기에 추가적인 안전자산 역할을 수행</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 4. 과거 성과 섹션 -->
+        <div id="performance-section" class="content-section">
+            <div class="text-left mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-teal-800 text-center"> 과거 성과 시뮬레이션</h2>
+                <p class="text-lg max-w-3xl mx-auto text-stone-600" style="word-break: keep-all;">
+                    아래 차트는 주식투자와 한국형 올웨더 포트폴리오의 성과를 비교한 것입니다.<br>
+                    두 포트폴리오의 평균 수익률, 최대 낙폭(MDD), 변동성 등 주요 지표를 비교하면 한국형 올웨더 포트폴리오의 우수성을 확인할 수 있습니다.<br>
+                    이는 장기적으로 주식투자와 유사한 수익률을 절반 수준의 위험으로 달성할 수 있습니다.
+                </p>
+            </div>
+            
+            <div class="chart-container" style="max-width: 800px; height: 400px; margin-left: auto; margin-right: auto;">
+                <canvas id="performanceChart1"></canvas>
+            </div>
+            <div class="overflow-x-auto max-w-4xl mx-auto my-8">
+                <h4 class="text-xl font-bold mb-4 text-center"> 주요 성과 지표 비교 </h4>
+                <table class="min-w-full bg-white border border-stone-200">
+                    <thead>
+                        <tr class="bg-stone-100">
+                            <th class="py-2 px-4 border-b text-center">지표</th>
+                            <th class="py-2 px-4 border-b text-center">한국 주식(KOSPI)</th>
+                            <th class="py-2 px-4 border-b text-center">한국형 올웨더</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border-b text-center">연평균 수익률 (CAGR)</td>
+                            <td class="py-2 px-4 border-b text-center">8.9%</td>
+                            <td class="py-2 px-4 border-b text-center">9.1%</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b text-center">1년 최대 낙폭 (MDD)</td>
+                            <td class="py-2 px-4 border-b text-center">-28%</td>
+                            <td class="py-2 px-4 border-b text-center">-14%</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b text-center">변동성 (Std. Dev)</td>
+                            <td class="py-2 px-4 border-b text-center">17.5%</td>
+                            <td class="py-2 px-4 border-b text-center">8.3%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="chart-container" style="max-width: 800px; height: 400px; margin-left: auto; margin-right: auto;">
+                <canvas id="performanceChart2"></canvas>
+            </div>
+            
+            <div class="overflow-x-auto max-w-4xl mx-auto my-8">
+                <h4 class="text-xl font-bold mb-4 text-center"> 국민연금 투자 수익률과 비교 </h4>
+                <table class="min-w-full bg-white border border-stone-200">
+                    <thead>
+                        <tr class="bg-stone-100">
+                            <th class="py-2 px-4 border-b text-center">지표</th>
+                            <th class="py-2 px-4 border-b text-center">국민연금(NPS)</th>
+                            <th class="py-2 px-4 border-b text-center">한국형 올웨더</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-2 px-4 border-b text-center">연평균 수익률 (CAGR)</td>
+                            <td class="py-2 px-4 border-b text-center">6.8%</td>
+                            <td class="py-2 px-4 border-b text-center">9.1%</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b text-center">1년 최대 낙폭 (MDD)</td>
+                            <td class="py-2 px-4 border-b text-center">-8%</td>
+                            <td class="py-2 px-4 border-b text-center">-14%</td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4 border-b text-center">변동성 (Std. Dev)</td>
+                            <td class="py-2 px-4 border-b text-center">7.0%</td>
+                            <td class="py-2 px-4 border-b text-center">8.3%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 5. 실행 전략 섹션 -->
+        <div id="strategy-section" class="content-section">
+            <div class="text-left mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 text-teal-800 text-center"> 실행 전략 가이드</h2>
+                <p class="text-lg max-w-3xl mx-auto text-stone-600">
+                    포트폴리오 구성만큼 중요한 것은 실행과 관리입니다. 보고서에서 제안하는 핵심 전략 4가지를 자세히 확인하세요.
+                </p>
+            </div>
+            <div class="max-w-4xl mx-auto space-y-4">
+                <div class="accordion-item bg-white rounded-lg border border-stone-200 shadow-sm">
+                    <button class="accordion-header w-full text-left p-5 font-semibold text-lg flex justify-between items-center hover:bg-stone-100 transition-colors">
+                        <span>1. 투자 실행 절차</span>
+                        <span class="transform transition-transform duration-300 text-2xl">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-5 border-t border-stone-200 text-stone-700">
+                            <p class="mb-4">한국형 올웨더 포트폴리오를 투자하기 위한 증권계좌 활용하는 절차는 다음과 같습니다:</p>
+                            <ul class="list-decimal list-inside space-y-2 mt-4">
+                                <li>증권 계좌 개설: 증권사에서 종합매매계좌를 개설합니다.</li>
+                                <li>주문 및 거래: 투자 비중에 맞춰 해당하는 금액의 각 ETF를 주문합니다.</li>
+                            </ul>
+                            <p class="mt-4">
+                                또한, 세금 부담을 줄이기 위해 ISA 계좌를 활용할 수 있습니다. <br>
+                                연간 2~3% 수준의 이자/배당 수익률이 예상되며 이는 과세 대상입니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item bg-white rounded-lg border border-stone-200 shadow-sm">
+                    <button class="accordion-header w-full text-left p-5 font-semibold text-lg flex justify-between items-center hover:bg-stone-100 transition-colors">
+                        <span>2. 효과적인 환율 리스크 관리 방안</span>
+                        <span class="transform transition-transform duration-300 text-2xl">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-5 border-t border-stone-200 text-stone-700">
+                            <p class="mb-4">개인 투자자는 환율 변동에 따른 불확실성을 제거하기 보다는 추가적인 위험방어 수단으로 활용해야 합니다.</p>
+                            <ul class="list-disc list-inside mt-4 space-y-2">
+                                <li>환헤지 상품: 'H'가 붙은 환헤지 ETF는 금리차이 만큼 수익률이 하락한다는 점을 알아야 합니다.</li>
+                                <li>미국 거래소: 해외 증권을 직접 매입하는 경우 환전이 필요하며 거래비용을 증가시킵니다.</li>
+                                <li>✔추천 전략: 개인투자자는 한국에 상장된 'UH' ETF를 활용하여 해외자산에 투자합니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item bg-white rounded-lg border border-stone-200 shadow-sm">
+                    <button class="accordion-header w-full text-left p-5 font-semibold text-lg flex justify-between items-center hover:bg-stone-100 transition-colors">
+                        <span>3. 포트폴리오의 정기적 관리</span>
+                        <span class="transform transition-transform duration-300 text-2xl">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-5 border-t border-stone-200 text-stone-700">
+                            <p class="mb-4">올웨더 포트폴리오는 한 번 구성한 후 영원히 두는 것이 아닙니다. 주기적인 리밸런싱(Rebalancing)을 통해 자산 비중을 원래의 목표에 맞게 재조정해야 합니다.</p>
+                            <p class="mb-4">정기적인 리밸런싱은 리스크 균형 유지, 수익률 개선의 이점을 제공합니다. 일반적으로 3개월 또는 6개월 주기로 리밸런싱을 실시할 수 있습니다.
+                            특정 자산의 가격이 많이 상승하면 최초 비중보다 높아지게 되고, 이때 발생한 수익만큼 실현하는 것도 좋은 방법입니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item bg-white rounded-lg border border-stone-200 shadow-sm">
+                    <button class="accordion-header w-full text-left p-5 font-semibold text-lg flex justify-between items-center hover:bg-stone-100 transition-colors">
+                        <span>4. 지금 적합한 투자 비중</span>
+                        <span class="transform transition-transform duration-300 text-2xl">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-5 border-t border-stone-200 text-stone-700">
+                            <p class="mb-4">한국형 올웨더 포트폴리오는 미래를 알수 없다는 점은 받아들이지만 지금이 어떤 계절인지에 집중합니다.</p>
+                            <p class="mb-4">한국의 사계절처럼 경제가 순환하는 것을 바라봅니다. 지금은 가을/겨울 사이 구간입니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="bg-stone-800 text-white mt-auto">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p class="text-sm text-stone-400 mt-2">투자에 대한 결정과 책임은 투자자 본인에게 있습니다. </p>
+            <a href="https://github.com/kr-aw/kr-aw.github.io/issues" class="text-sm">issue: kr-aw.github.io/issues </a> <br>
+            <a href="mailto:kr.awpf@gmail.com" class="text-sm">contact: kr.awpf@gmail.com </a>
+        </div>
+    </footer>
+
+    <script>
+        // DOMContentLoaded 이벤트 리스너: 문서가 완전히 로드된 후 스크립트 실행
+        document.addEventListener('DOMContentLoaded', function () {
+            // 네비게이션 버튼과 섹션 요소 선택
+            const navButtons = {
+                intro: document.getElementById('intro-btn'),
+                philosophy: document.getElementById('philosophy-btn'),
+                compare: document.getElementById('compare-btn'),
+                performance: document.getElementById('performance-btn'),
+                strategy: document.getElementById('strategy-btn')
+            };
+            const sections = {
+                intro: document.getElementById('intro-section'),
+                philosophy: document.getElementById('philosophy-section'),
+                compare: document.getElementById('compare-section'),
+                performance: document.getElementById('performance-section'),
+                strategy: document.getElementById('strategy-section')
+            };
+
+            const hasChart = typeof Chart !== 'undefined';
+            if (!hasChart) { console.warn('Chart.js를 불러오지 못했습니다. 차트는 표시되지 않습니다.'); }
+            const allCharts = [];
+
+            // 섹션 가시성을 토글하는 함수
+            function showSection(sectionId) {
+                // 모든 섹션을 숨김
+                for (const key in sections) {if (sections[key]) {sections[key].classList.add('hidden');}}
+                // 현재 선택된 섹션만 보이게 함
+                if (sections[sectionId]) {sections[sectionId].classList.remove('hidden');}
+                // 모든 네비게이션 버튼의 active 클래스 제거
+                for (const key in navButtons) {if (navButtons[key]) {navButtons[key].classList.remove('active');}}
+                // 현재 선택된 버튼에 active 클래스 추가
+                if (navButtons[sectionId]) {navButtons[sectionId].classList.add('active');}
+                // 숨겨진 상태에서 만들어진 차트의 크기를 다시 계산
+                allCharts.forEach(c => c.resize());
+                window.scrollTo({ top: 0 });}
+
+            // 네비게이션 버튼 클릭 이벤트 리스너 추가
+            for (const key in navButtons) {
+                if (navButtons[key]) {navButtons[key].addEventListener('click', () => showSection(key));} }
+
+            // 페이지 로드 시 '소개' 섹션을 기본으로 보여줌
+            showSection('intro');
+
+            // 포트폴리오 비교 차트 데이터
+            const portfolioData = {
+                standard: {
+                    labels: ['미국 주식', '장기 채권', '중기 채권', '금', '원자재'],
+                    data: [30, 40, 15, 7.5, 7.5],
+                    backgroundColor: ['#0ea5e9', '#1d4ed8', '#60a5fa', '#f59e0b', '#f97316'],
+                    description: `
+                        <h3 class="text-2xl font-bold mb-4 text-stone-800">일반 올웨더 포트폴리오</h3>
+                        <p class="text-stone-600 mb-6">레이 달리오가 제안한 개인 투자자용 모델로, 미국 달러(USD) 자산으로 구성되어 있습니다. 한국 투자자는 환율 변동 리스크를 부담하게 됩니다.</p>
+                        <ul class="space-y-3 text-stone-700">
+                            <li class="flex items-start"><span class="font-bold text-lg text-sky-500 mr-2">■</span><div><b>미국 주식 (30%):</b> 경제 성장기에 투자수익 핵심 원천</div></li>
+                            <li class="flex items-start"><span class="font-bold text-lg text-blue-700 mr-2">■</span><div><b>장기 채권 (40%):</b> 경기 침체기의 위험을 방어</div></li>
+                            <li class="flex items-start"><span class="font-bold text-lg text-sky-400 mr-2">■</span><div><b>중기 채권 (15%):</b> 포트폴리오 안정성과 유동성을 보강</div></li>
+                            <li class="flex items-start"><span class="font-bold text-lg text-amber-500 mr-2">■</span><div><b>금 (7.5%):</b> 인플레이션과 지정학적 리스크를 헤지</div></li>
+                            <li class="flex items-start"><span class="font-bold text-lg text-orange-500 mr-2">■</span><div><b>원자재 (7.5%):</b> 인플레이션을 방어</div></li>
+                        </ul>
+                    `
+                },
+                korean: {
+                    labels: ['한국 주식', '미국 주식', '국내 채권', '해외 채권', '금', '원자재'],
+                    data: [15, 15, 20, 35, 7.5, 7.5],
+                    backgroundColor: ['#add8e6','#0ea5e9', '#10b981', '#059669', '#f59e0b', '#f97316'],
+                    description: `
+                        <h3 class="text-2xl font-bold mb-4 text-teal-700">한국형 올웨더 포트폴리오</h3>
+                        <p class="text-stone-600 mb-6"> 일반 올웨더의 비중을 따르지만 국내(35%)와 해외(65%)로 분산하여 환율 리스크까지 관리하는 모델입니다. 달러 자산이 포트폴리오의 안정성을 높입니다.</p>
+                        <ul class="space-y-3 text-stone-700">
+                            <li class="flex items-start"><span class="font-bold text-lg text-sky-500 mr-2">■</span><div><b>한국 주식 (15%):</b> 한국의 경제 성장기에 투자수익 원천 </div></li>
+                            <li class="flex items-start"><span class="font-bold text-lg text-sky-500 mr-2">■</span><div><b>미국 주식 (UH,15%):</b> 글로벌 성장으로 수익 원천을 다변화 </div></li>
+                            <li class="flex items-start"><span class="font-bold text-lg text-emerald-500 mr-2">■</span><div><b>한국 국채 (20%):</b> 국내 경기 방어 효과</div></li>
+                            <li class="flex items-start"><span class="font-bold text-lg text-teal-600 mr-2">■</span><div><b>미국 국채 (UH,35%):</b> 경기 침체기의 위험 방어. 환율 상승으로 헤지 효과 증가.</div></li>
+                            <li class="flex items-start"><span class="font-bold text-lg text-amber-500 mr-2">■</span><div><b>금 (UH,7.5%):</b> 인플레이션과 지정학 리스크 헤지</div></li>
+                            <li class="flex items-start"><span class="font-bold text-lg text-orange-500 mr-2">■</span><div><b>원자재 (UH,7.5%):</b> 인플레이션 방어 기능</div></li>
+                        </ul>
+                    `
+                }
+            };
+            
+            // 포트폴리오 비교 도넛 차트
+            const ctxPortfolio = document.getElementById('portfolioChart').getContext('2d');
+            const portfolioChart = hasChart ? new Chart(ctxPortfolio, {
+                type: 'doughnut',
+                data: {labels: portfolioData.korean.labels,
+                       datasets: [{data: portfolioData.korean.data, backgroundColor: portfolioData.korean.backgroundColor, borderWidth: 1}]},
+                options: {
+                    responsive: true, maintainAspectRatio: false, cutout: '60%',
+                    plugins: { legend: {position: 'bottom', labels: {padding: 20, font: { size: 14, family: "'Noto Sans KR', sans-serif" }}},
+                        tooltip: {callbacks: {label: function(context) {let label = context.label || ''; if (label) { label += ': '; }
+                                    if (context.parsed !== null) { label += context.parsed + '%'; } return label;}},
+                            bodyFont: { size: 14, family: "'Noto Sans KR', sans-serif" },
+                            titleFont: { size: 16, family: "'Noto Sans KR', sans-serif" },
+                            padding: 12, backgroundColor: 'rgba(0,0,0,0.7)', cornerRadius: 8
+                        }
+                    },
+                    animation: { animateRotate: true, animateScale: true, easing: 'easeOutQuart' }
+                }
+            }) : null;
+            if (portfolioChart) allCharts.push(portfolioChart);
+
+            // 포트폴리오 토글 스위치 기능
+            const toggle = document.getElementById('portfolio-toggle');
+            const descriptionDiv = document.getElementById('portfolio-description');
+            const labelStandard = document.getElementById('label-standard');
+            const labelKorean   = document.getElementById('label-korean');
+
+            function updatePortfolioChart(isKorean) {
+                const data = isKorean ? portfolioData.korean : portfolioData.standard;
+                if (portfolioChart) {
+                    portfolioChart.data.labels = data.labels;
+                    portfolioChart.data.datasets[0].data = data.data;
+                    portfolioChart.data.datasets[0].backgroundColor = data.backgroundColor;
+                    portfolioChart.update();
+                }
+                descriptionDiv.innerHTML = data.description;
+                
+                if (isKorean) {
+                    labelStandard.classList.remove('font-bold', 'text-teal-700');
+                    labelStandard.classList.add('font-semibold', 'text-stone-500');
+                    labelKorean.classList.add('font-bold', 'text-teal-700');
+                    labelKorean.classList.remove('font-semibold', 'text-stone-500');
+                } else {
+                    labelKorean.classList.remove('font-bold', 'text-teal-700');
+                    labelKorean.classList.add('font-semibold', 'text-stone-500');
+                    labelStandard.classList.add('font-bold', 'text-teal-700');
+                    labelStandard.classList.remove('font-semibold', 'text-stone-500');
+                }
+            }
+            
+            toggle.addEventListener('change', (event) => {updatePortfolioChart(event.target.checked);});
+
+            // 초기 상태는 일반 포트폴리오로 설정
+            updatePortfolioChart(false);
+            
+            // 환율-코스피 상관관계 라인 차트
+            const correlationCtx = document.getElementById('correlationChart').getContext('2d');
+            const correlationChart = !hasChart ? null : new Chart(correlationCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+                    datasets: [
+                           {label: 'KOSPI (좌측 축)',
+                            data: [1961,2026,2467,2041,2198,2873,2978,2236,2655,2399],
+                            borderColor: '#3b82f6',      backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            fill: false,     tension: 0.0,     yAxisID: 'y'},
+                           {label: '원/달러 환율 (우측 축)',
+                            data: [1172,1208,1071,1116,1156,1086,1189,1266,1288,1472],
+                            borderColor: '#ef4444',        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            fill: false,      tension: 0.0,     yAxisID: 'y1'}]
+                },
+                options: {responsive: true, maintainAspectRatio: false, interaction: { mode: 'index',  intersect: false, },
+                    scales: {
+                        x: { title: { display: true, text: '연도' }, ticks:{font:{size:16}}  },
+                        y: {type: 'linear', display: true, position: 'left', min: 1000, max: 3500, ticks:{font:{size:16}},
+                            title: { display: true, text: 'KOSPI 지수', color: '#3b82f6' } },
+                        y1: { type: 'linear', display: true, position: 'right',  min: 600, max: 1600, ticks:{font:{size:16}},
+                            grid: { drawOnChartArea: false }, title: { display: true, text: '원달러 환율', color: '#ef4444' }}},
+                    plugins: {
+                        legend: { position: 'top', labels: { font: { size: 18, family: "'Noto Sans KR', sans-serif" } } },
+                        tooltip: {
+                            bodyFont: { size: 16, family: "'Noto Sans KR', sans-serif" },
+                            titleFont: { size: 16, family: "'Noto Sans KR', sans-serif" },
+                            padding: 12, backgroundColor: 'rgba(0,0,0,0.7)', cornerRadius: 8}}
+                         }
+            });
+
+            // 과거 성과 시뮬레이션 라인 차트1
+            const performanceCtx1 = document.getElementById('performanceChart1').getContext('2d');
+            const performanceChart1 = !hasChart ? null : new Chart(performanceCtx1, {
+                type: 'line',
+                data: {
+                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025.9'],
+                    datasets: [
+                           {label: '한국 주식(KOSPI)',
+                            data: [100, 106.8, 138.3, 116.6, 132.9, 175.6, 189.5, 142.2, 179.6, 160.7, 234.1],
+                            borderColor: '#1d4ed8',
+                            backgroundColor: 'rgba(29, 78, 216, 0.1)',
+                            fill: false, tension: 0.0 },
+                           {label: '한국형 올웨더 포트폴리오',
+                            data: [100, 110.2, 115.8, 114.3, 140.5, 157.3, 181.4, 155.8, 182.9, 210.4, 239.2],
+                            borderColor: 'rgba(255, 165, 0, 0.6)',
+                            backgroundColor: 'rgba(255, 165, 0, 0.9)', fill: false, tension: 0.0 }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: '연도' }, ticks:{font:{size:16}}  },
+                        y: { title: { display: true, text: '누적 수익률 (기준: 100)' }, ticks:{font:{size:16}} }
+                    },
+                    plugins: {
+                        legend: { position: 'top' , labels: { font: { size: 18, family: "'Noto Sans KR', sans-serif" } } },
+                        tooltip: {
+                            bodyFont: { size: 16, family: "'Noto Sans KR', sans-serif" },
+                            titleFont: { size: 16, family: "'Noto Sans KR', sans-serif" },
+                            padding: 12, backgroundColor: 'rgba(0,0,0,0.7)', cornerRadius: 8}}}
+            });
+
+             // 과거 성과 시뮬레이션 라인 차트2
+            const performanceCtx2 = document.getElementById('performanceChart2').getContext('2d');
+            const performanceChart2 = !hasChart ? null : new Chart(performanceCtx2, {
+                type: 'line',
+                data: {
+                    labels: ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025.9'],
+                    datasets: [
+                           {label: '국민연금 (NPS)',
+                            data: [100, 104.8, 112.4, 111.3, 123.9, 135.9, 150.6, 138.2, 157, 180.5, 192.9],
+                            borderColor: '#1d4ed8',
+                            backgroundColor: 'rgba(29, 78, 216, 0.1)',
+                            fill: false, tension: 0.0 },
+                           {label: '한국형 올웨더 포트폴리오',
+                            data: [100, 110.2, 115.8, 114.3, 140.5, 157.3, 181.4, 155.8, 182.9, 210.4, 239.2],
+                            borderColor: 'rgba(255, 165, 0, 0.6)',
+                            backgroundColor: 'rgba(255, 165, 0, 0.9)', fill: false, tension: 0.0 }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: '연도' }, ticks:{font:{size:16}}  },
+                        y: { title: { display: true, text: '누적 수익률 (기준: 100)' }, ticks:{font:{size:16}} }
+                    },
+                    plugins: {
+                        legend: { position: 'top' , labels: { font: { size: 18, family: "'Noto Sans KR', sans-serif" } } },
+                        tooltip: {
+                            bodyFont: { size: 16, family: "'Noto Sans KR', sans-serif" },
+                            titleFont: { size: 16, family: "'Noto Sans KR', sans-serif" },
+                            padding: 12, backgroundColor: 'rgba(0,0,0,0.7)', cornerRadius: 8}}}
+            });
+            
+            [correlationChart, performanceChart1, performanceChart2].forEach(c => { if (c) allCharts.push(c); });
+
+            // 아코디언 메뉴 기능
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                const icon = header.querySelector('span:last-child');
+
+                header.addEventListener('click', () => {
+                    const isOpened = content.style.maxHeight && content.style.maxHeight !== '0px';
+                    
+                    // 다른 모든 아코디언 닫기
+                    accordionItems.forEach(i => {
+                        i.querySelector('.accordion-content').style.maxHeight = '0px';
+                        i.querySelector('.accordion-header span:last-child').style.transform = 'rotate(0deg)';
+                    });
+
+                    // 현재 아코디언 열기/닫기
+                    if (!isOpened) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
